@@ -1,6 +1,7 @@
 from plugin_qa_commons import RecordsLimit, build_row
 from dataiku.connector import Connector
 
+
 class DataSourceConnector(Connector):
 
     def __init__(self, config, plugin_config):
@@ -32,7 +33,7 @@ class DataSourceConnector(Connector):
         return None
 
     def generate_rows(self, dataset_schema=None, dataset_partitioning=None,
-                            partition_id=None, records_limit = -1):
+                      partition_id=None, records_limit=-1):
         """
         The main reading method.
 
@@ -52,7 +53,7 @@ class DataSourceConnector(Connector):
                 return
 
     def get_writer(self, dataset_schema=None, dataset_partitioning=None,
-                         partition_id=None):
+                   partition_id=None):
         """
         Returns a writer object to write in the dataset (or in a partition).
 
@@ -62,19 +63,16 @@ class DataSourceConnector(Connector):
         """
         raise NotImplementedError
 
-
     def get_partitioning(self):
         """
         Return the partitioning schema that the connector defines.
         """
         raise NotImplementedError
 
-
     def list_partitions(self, partitioning):
         """Return the list of partitions for the partitioning scheme
         passed as parameter"""
         return []
-
 
     def partition_exists(self, partitioning, partition_id):
         """Return whether the partition passed as parameter exists
@@ -83,7 +81,6 @@ class DataSourceConnector(Connector):
         in the connector definition
         """
         raise NotImplementedError
-
 
     def get_records_count(self, partitioning=None, partition_id=None):
         """
