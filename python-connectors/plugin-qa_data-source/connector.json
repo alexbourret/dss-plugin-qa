@@ -1,0 +1,31 @@
+{
+    "meta" : {
+        "label": "Create a data source",
+        "description": "Create a dataset for consistency check",
+        "icon": "icon-puzzle-piece"
+    },
+    "readable": true,
+    "writable": false,
+    "params": [
+        {
+            "name": "number_of_columns",
+            "type": "INT",
+            "defaultValue" : 10
+        },
+        {
+            "name": "number_of_rows",
+            "type": "INT",
+            "defaultValue" : 10000
+        },
+        {
+            "name": "use_cjk_in_columns_names",
+            "type": "BOOLEAN",
+            "defaultValue" : true
+        },
+        {
+            "name": "use_emojis_in_columns_names",
+            "type": "BOOLEAN",
+            "defaultValue" : false
+        }
+    ]
+}

@@ -1,0 +1,61 @@
+{
+    "meta": {
+        "label": "Check dataset consistency",
+        "description": "",
+        "icon": ""
+    },
+    "kind": "PYTHON",
+    "selectableFromDataset": "input_dataset",
+    "inputRoles": [
+        {
+            "name": "input_dataset",
+            "label": "Dataset containing event frames",
+            "description": "",
+            "arity": "UNARY",
+            "required": true,
+            "acceptsDataset": true
+        }
+    ],
+
+    "outputRoles": [
+        {
+            "name": "api_output",
+            "label": "Main output displayed name",
+            "description": "",
+            "arity": "UNARY",
+            "required": true,
+            "acceptsDataset": true
+        }
+    ],
+    "params": [
+        {
+            "name": "number_of_columns",
+            "type": "INT",
+            "defaultValue" : 10,
+            "visibilityCondition": false
+        },
+        {
+            "name": "number_of_rows",
+            "type": "INT",
+            "defaultValue" : 10000,
+            "visibilityCondition": false
+        },
+        {
+            "name": "use_cjk_in_columns_names",
+            "type": "BOOLEAN",
+            "defaultValue" : true
+        },
+        {
+            "name": "use_emojis_in_columns_names",
+            "type": "BOOLEAN",
+            "defaultValue" : false
+        },
+        {
+            "name": "should_raise_on_error",
+            "label": "Should raise on error",
+            "type": "BOOLEAN",
+            "defaultValue" : false
+        }
+    ],
+    "resourceKeys": []
+}
