@@ -1,0 +1,63 @@
+{
+    "meta": {
+        "label": "Check currency rates",
+        "description": "Run various checks on currency rates data downloaded from ecb.europa.eu",
+        "icon": "icon-puzzle-piece"
+    },
+    "kind": "PYTHON",
+    "selectableFromDataset": "input_A_role",
+    "inputRoles": [
+        {
+            "name": "input_A_role",
+            "label": "New currency dataset",
+            "description": "Currency dataset to check for validity",
+            "arity": "UNARY",
+            "required": true,
+            "acceptsDataset": true
+        },
+        {
+            "name": "input_B_role",
+            "label": "Previous currency dataset",
+            "description": "Optional. Has to be already tested (error free).",
+            "arity": "UNARY",
+            "required": false,
+            "acceptsDataset": true
+        }
+    ],
+
+    "outputRoles": [
+        {
+            "name": "main_output",
+            "label": "main output displayed name",
+            "description": "what main output means",
+            "arity": "UNARY",
+            "required": false,
+            "acceptsDataset": true
+        }
+    ],
+
+    "params": [
+        {
+            "name": "desc_separator",
+            "type": "SEPARATOR",
+            "label": "Run checks on currency data",
+            "description": "v Values are either float or NA\nv No zeros in values\nv Dates correctly formated\nv 1 day increment per row\nv No NA in main currencies"
+        },
+        {
+            "name": "check_max_variation",
+            "type": "BOOLEAN",
+            "label": "Check variation range",
+            "description":"Check that daily variations are with a defined %",
+            "defaultValue": true
+        },
+        {
+            "name": "max_variation",
+            "type": "INT",
+            "label": "Maximum variation allowed",
+            "description":"% change between two days",
+            "defaultValue": 33,
+            "visibilityCondition": "model.check_max_variation==true"
+        }
+    ],
+    "resourceKeys": []
+}
