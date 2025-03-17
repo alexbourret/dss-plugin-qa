@@ -26,6 +26,26 @@
             "name": "use_emojis_in_columns_names",
             "type": "BOOLEAN",
             "defaultValue" : false
+        },
+        {
+            "name": "use_date",
+            "type": "BOOLEAN",
+            "defaultValue" : false
+        },
+        {
+            "name": "use_datetime_tz",
+            "type": "BOOLEAN",
+            "defaultValue" : false
+        },
+        {
+            "name": "use_datetime_no_tz",
+            "type": "BOOLEAN",
+            "defaultValue" : false
+        },
+        {
+            "name": "export_schema",
+            "type": "BOOLEAN",
+            "defaultValue" : false
         }
     ]
 }

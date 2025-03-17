@@ -1,4 +1,4 @@
-from plugin_qa_commons import RecordsLimit, build_row
+from plugin_qa_commons import RecordsLimit, build_row, build_column_name, get_type
 from dataiku.connector import Connector
 
 
@@ -10,6 +10,10 @@ class DataSourceConnector(Connector):
         self.number_of_rows = config.get("number_of_rows", 10000)
         self.use_cjk_in_columns_names = config.get("use_cjk_in_columns_names", True)
         self.use_emojis_in_columns_names = config.get("use_emojis_in_columns_names", True)
+        self.use_date = config.get("use_date", False)
+        self.use_datetime_tz = config.get("use_datetime_tz", False)
+        self.use_datetime_no_tz = config.get("use_datetime_no_tz", False)
+        self.export_schema = config.get("export_schema", False)
 
     def get_read_schema(self):
         """
@@ -30,6 +34,18 @@ class DataSourceConnector(Connector):
 
         Supported types are: string, int, bigint, float, double, date, boolean
         """
+        if self.export_schema:
+            columns = []
+            for column_number in range(0, self.number_of_columns):
+                columns.append(
+                    {
+                        "name": build_column_name(column_number, use_cjk=self.use_cjk_in_columns_names, use_emoji=self.use_emojis_in_columns_names),
+                        "type": get_type(column_number, use_date=self.use_date, use_datetime_tz=self.use_datetime_tz, use_datetime_no_tz=self.use_datetime_no_tz)
+                    }
+                )
+            return {
+                "columns": columns
+            }
         return None
 
     def generate_rows(self, dataset_schema=None, dataset_partitioning=None,
@@ -47,7 +63,10 @@ class DataSourceConnector(Connector):
             yield build_row(
                 row_number, self.number_of_columns,
                 use_cjk=self.use_cjk_in_columns_names,
-                use_emoji=self.use_emojis_in_columns_names
+                use_emoji=self.use_emojis_in_columns_names,
+                use_date=self.use_date,
+                use_datetime_tz=self.use_datetime_tz,
+                use_datetime_no_tz=self.use_datetime_no_tz
             )
             if limit.is_reached():
                 return
