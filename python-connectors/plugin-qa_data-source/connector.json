@@ -9,43 +9,76 @@
     "params": [
         {
             "name": "number_of_columns",
+            "label": "Number of columns",
             "type": "INT",
             "defaultValue" : 10
         },
         {
             "name": "number_of_rows",
+            "label": "Number of rows",
             "type": "INT",
             "defaultValue" : 10000
         },
         {
+            "name": "column_separator",
+            "label": " ",
+            "description": "Column names",
+            "type": "SEPARATOR"
+        },
+        {
             "name": "use_cjk_in_columns_names",
+            "label": " ",
+            "description": "Use CJK chars",
             "type": "BOOLEAN",
             "defaultValue" : true
         },
         {
             "name": "use_emojis_in_columns_names",
+            "label": " ",
+            "description": "Use emojis",
             "type": "BOOLEAN",
             "defaultValue" : false
         },
         {
+            "name": "data_separator",
+            "label": " ",
+            "description": "Data content",
+            "type": "SEPARATOR"
+        },
+        {
             "name": "use_date",
+            "label": " ",
+            "description": "Add date only",
+            "type": "BOOLEAN",
+            "defaultValue" : false
+        },
+        {
+            "name": "use_datetime_utc",
+            "label": " ",
+            "description": "Add UTC datetime",
             "type": "BOOLEAN",
             "defaultValue" : false
         },
         {
             "name": "use_datetime_tz",
+            "label": " ",
+            "description": "Add datetime with specific time zone",
             "type": "BOOLEAN",
             "defaultValue" : false
         },
         {
             "name": "use_datetime_no_tz",
+            "label": " ",
+            "description": "Add no-timezone datetime",
             "type": "BOOLEAN",
             "defaultValue" : false
         },
         {
             "name": "export_schema",
+            "label": " ",
+            "description": "Export schema",
             "type": "BOOLEAN",
-            "defaultValue" : false
+            "defaultValue" : true
         }
     ]
 }

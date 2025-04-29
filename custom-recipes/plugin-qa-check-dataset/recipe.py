@@ -19,11 +19,20 @@ value_mismatch_errors = 0
 column_name_mismatch_errors = 0
 number_of_columns = 0
 should_raise_on_error = config.get("should_raise_on_error", False)
+use_date = config.get("use_date", False)
+use_datetime_utc = config.get("use_datetime_utc", False)
+use_datetime_tz = config.get("use_datetime_tz", False)
+use_datetime_no_tz = config.get("use_datetime_no_tz", False)
 
 for row_number, input_parameters_row in input_parameters_dataframe.iterrows():
     column_number = 0
     for actual_value in input_parameters_row:
-        predicted_value = chaos_monkey(build_value(row_number, column_number))
+        predicted_value = chaos_monkey(
+            build_value(row_number, column_number,
+                        use_date=use_date, use_datetime_utc=use_datetime_utc,
+                        use_datetime_tz=use_datetime_tz, use_datetime_no_tz=use_datetime_no_tz
+            )
+        )
         if type(predicted_value) != type(actual_value):
             error_message = "Error: type mismatch on [{},{}], {} expected, got {}. Value is {}".format(
                 row_number, column_number, type(predicted_value), type(actual_value), actual_value)
@@ -34,7 +43,7 @@ for row_number, input_parameters_row in input_parameters_dataframe.iterrows():
         if predicted_value != actual_value:
             if isinstance(predicted_value, float):
                 if (pd.isna(predicted_value) or pd.isna(actual_value)):
-                    error_message = "Error: value mismatch on [{},{}], {} expected, got {}.".format(
+                    error_message = "Error1: value mismatch on [{},{}], {} expected, got {}.".format(
                         row_number, column_number, predicted_value, actual_value)
                     print(error_message)
                     if should_raise_on_error:
@@ -43,14 +52,14 @@ for row_number, input_parameters_row in input_parameters_dataframe.iterrows():
                 else:
                     error = actual_value - predicted_value
                     if error > 0.01:
-                        error_message = "Error: value mismatch on [{},{}], {} expected, got {}.".format(
+                        error_message = "Error2: value mismatch on [{},{}], {} expected, got {}.".format(
                             row_number, column_number, predicted_value, actual_value)
                         print(error_message)
                         if should_raise_on_error:
                             raise Exception(error_message)
                         value_mismatch_errors = value_mismatch_errors + 1
             else:
-                error_message = "Error: value mismatch on [{},{}], {} expected, got {}.".format(
+                error_message = "Error3: value mismatch on [{},{}], {} expected, got {}.".format(
                     row_number, column_number, predicted_value, actual_value)
                 print(error_message)
                 if should_raise_on_error:
@@ -82,6 +91,6 @@ output_row = {
 unnested_items_rows = [output_row]
 
 output_df = pd.DataFrame([], columns=["Nb type mismatch", "Nb Value mismatch", "Nb column mismatch"])
-output_df = output_df.append(output_row, ignore_index=True)
+output_df.loc[len(output_df)] = output_row
 plugin_installation_result_v2 = dataiku.Dataset(output_names_stats[0])
 plugin_installation_result_v2.write_with_schema(output_df)

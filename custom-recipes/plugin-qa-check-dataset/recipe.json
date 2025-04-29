@@ -41,12 +41,49 @@
             "visibilityCondition": false
         },
         {
+            "name": "column_separator",
+            "label": " ",
+            "description": "Column names",
+            "type": "SEPARATOR"
+        },
+        {
             "name": "use_cjk_in_columns_names",
+            "label": "Use CJK chars",
             "type": "BOOLEAN",
             "defaultValue" : true
         },
         {
             "name": "use_emojis_in_columns_names",
+            "label": "Use emojis",
+            "type": "BOOLEAN",
+            "defaultValue" : false
+        },
+        {
+            "name": "data_separator",
+            "label": "Data content",
+            "type": "SEPARATOR"
+        },
+        {
+            "name": "use_date",
+            "label": "Add date only",
+            "type": "BOOLEAN",
+            "defaultValue" : false
+        },
+        {
+            "name": "use_datetime_utc",
+            "label": "Add UTC datetime",
+            "type": "BOOLEAN",
+            "defaultValue" : false
+        },
+        {
+            "name": "use_datetime_tz",
+            "label": "Add datetime with tz",
+            "type": "BOOLEAN",
+            "defaultValue" : false
+        },
+        {
+            "name": "use_datetime_no_tz",
+            "label": "Add no-timezone datetime",
             "type": "BOOLEAN",
             "defaultValue" : false
         },
