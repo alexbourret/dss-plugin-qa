@@ -60,7 +60,7 @@
             "name": "last_modified_tolerance",
             "label": "Time difference tolerance",
             "type": "INT",
-            "defaultValue": 1000,
+            "defaultValue": 10000,
             "description": "(ms)",
             "visibilityCondition": "model.shoud_test_last_modified"
         },
