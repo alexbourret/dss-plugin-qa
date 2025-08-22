@@ -5,7 +5,7 @@
         "label": "Plugin QA",
         "description": "Tools for DSS plugins QA",
         "author": "Dataiku (Alex Bourret)",
-        "icon": "icon-puzzle-piece",
+        "icon": "icon-check",
         "tags": [],
         "url": "",
         "licenseInfo": "Apache Software License"
