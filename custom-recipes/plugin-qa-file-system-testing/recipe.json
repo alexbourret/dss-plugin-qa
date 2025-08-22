@@ -1,0 +1,76 @@
+{
+    "meta": {
+        "label": "File system testing",
+        "description": "",
+        "icon": "icon-check"
+    },
+    "kind": "PYTHON",
+    "selectableFromFolder": "input_A_role",
+    "inputRoles": [
+        {
+            "name": "input_A_role",
+            "label": "Folder to test",
+            "description": "Folder created with the filesystem to test",
+            "arity": "UNARY",
+            "required": true,
+            "acceptsDataset": false,
+            "acceptsManagedFolder": true
+        }
+    ],
+    "outputRoles": [
+        {
+            "name": "main_output",
+            "label": "Tests results",
+            "description": "",
+            "arity": "UNARY",
+            "required": false,
+            "acceptsDataset": true
+        }
+    ],
+    "params": [
+        {
+            "name": "shoud_test_on_root",
+            "label": "Should test in root directory",
+            "type": "BOOLEAN",
+            "defaultValue": true,
+            "description": ""
+        },
+        {
+            "name": "shoud_test_on_folder",
+            "label": "Should test with folder creation",
+            "type": "BOOLEAN",
+            "defaultValue": true,
+            "description": ""
+        },
+        {
+            "name": "shoud_test_file_size",
+            "label": "Should test reported file size",
+            "type": "BOOLEAN",
+            "defaultValue": true,
+            "description": ""
+        },
+        {
+            "name": "shoud_test_last_modified",
+            "label": "Should test 'last modified' value",
+            "type": "BOOLEAN",
+            "defaultValue": true,
+            "description": ""
+        },
+        {
+            "name": "last_modified_tolerance",
+            "label": "Time difference tolerance",
+            "type": "INT",
+            "defaultValue": 1000,
+            "description": "(ms)",
+            "visibilityCondition": "model.shoud_test_last_modified"
+        },
+        {
+            "name": "shoud_raise_on_error",
+            "label": "Should raise on error",
+            "type": "BOOLEAN",
+            "defaultValue": true,
+            "description": "The recipe should raise if any errors occurs during testing"
+        }
+    ],
+    "resourceKeys": []
+}
