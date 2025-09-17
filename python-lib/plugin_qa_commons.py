@@ -88,13 +88,15 @@ def sample_picker(samples, range):
 
 
 def time_to_epoch(time_string):
-    import time
+    from datetime import datetime
     patterns = ["%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%dT%H:%M:%SZ", "%Y-%m-%dT%H:%M:%S.%fZ", "%Y-%m-%d"]
     epoch = None
     for pattern in patterns:
         try:
-            epoch = int(time.mktime(time.strptime(time_string, pattern)))
+            # epoch = int(time.mktime(time.strptime(time_string, pattern)))
+            utc_time = datetime.strptime(time_string, pattern)
+            epoch = int((utc_time - datetime(1970, 1, 1)).total_seconds())
         except Exception as error:
-            # print("ALX:error:{}".format(error))
+            # print("ALX:error:{} with {}".format(error, pattern))
             pass
     return epoch
