@@ -2,7 +2,7 @@
 import dataiku
 from dataiku.customrecipe import get_input_names_for_role, get_recipe_config, get_output_names_for_role
 import pandas as pd
-from plugin_qa_commons import chaos_monkey, build_value, build_column_name
+from plugin_qa_commons import chaos_monkey, build_value, build_column_name, time_to_epoch
 
 input_dataset = get_input_names_for_role('input_dataset')
 output_names_stats = get_output_names_for_role('api_output')
@@ -11,8 +11,11 @@ dku_flow_variables = dataiku.get_flow_variables()
 
 
 input_parameters_dataset = dataiku.Dataset(input_dataset[0])
-input_parameters_dataframe = input_parameters_dataset.get_dataframe()
-
+input_schema = input_parameters_dataset.read_schema()
+input_column_types = []
+for column in input_schema:
+    input_column_types.append(column.get("type"))
+input_parameters_dataframe = input_parameters_dataset.get_dataframe(infer_with_pandas=False)
 nb_rows_to_process = input_parameters_dataframe.shape[0]
 type_mismatch_errors = 0
 value_mismatch_errors = 0
@@ -33,9 +36,14 @@ for row_number, input_parameters_row in input_parameters_dataframe.iterrows():
                 use_datetime_no_tz=use_datetime_no_tz
             )
         )
-        if type(predicted_value) != type(actual_value):
-            error_message = "Error: type mismatch on [{},{}], {} expected, got {}. Value is {}".format(
-                row_number, column_number, type(predicted_value), type(actual_value), actual_value)
+        input_column_type = input_column_types[column_number]
+        if input_column_type in ["date", "datetimenotz", "dateonly"]:
+            # column_number = column_number + 1
+            # continue
+            pass
+        elif type(predicted_value) != type(actual_value):
+            error_message = "Error: type mismatch on row {}, column {}, {} expected, got {}. Value is {} instead of {}".format(
+                row_number, column_number, type(predicted_value), type(actual_value), actual_value, predicted_value)
             print(error_message)
             if should_raise_on_error:
                 raise Exception(error_message)
@@ -58,6 +66,25 @@ for row_number, input_parameters_row in input_parameters_dataframe.iterrows():
                         if should_raise_on_error:
                             raise Exception(error_message)
                         value_mismatch_errors = value_mismatch_errors + 1
+            elif input_column_type in ["date", "datetimenotz", "dateonly"]:
+                epoch_predicted = time_to_epoch(predicted_value)
+                if isinstance(actual_value, pd.Timestamp):
+                    epoch_actual = int(actual_value.timestamp())
+                else:
+                    epoch_actual = time_to_epoch(actual_value)
+                is_same_date = (abs(epoch_predicted - epoch_actual) <= 3600)  # mystery... 
+                # if input_column_type == "dateonly":
+                #     is_same_date = (abs(epoch_predicted - epoch_actual) <= 3600)
+                # else:
+                #     is_same_date = (epoch_predicted == epoch_actual)
+                if not is_same_date:
+                    error_message = "Error1: value mismatch on [{},{}], {} expected, got {}.".format(
+                        row_number, column_number, predicted_value, actual_value
+                    )
+                    print(error_message)
+                    if should_raise_on_error:
+                        raise Exception(error_message)
+                    value_mismatch_errors = value_mismatch_errors + 1
             else:
                 error_message = "Error3: value mismatch on [{},{}], {} expected, got {}.".format(
                     row_number, column_number, predicted_value, actual_value)

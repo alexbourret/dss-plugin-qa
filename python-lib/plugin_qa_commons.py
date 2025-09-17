@@ -85,3 +85,16 @@ def get_emoji(row_number, column_number):
 
 def sample_picker(samples, range):
     return samples[range % len(samples)]
+
+
+def time_to_epoch(time_string):
+    import time
+    patterns = ["%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%dT%H:%M:%SZ", "%Y-%m-%dT%H:%M:%S.%fZ", "%Y-%m-%d"]
+    epoch = None
+    for pattern in patterns:
+        try:
+            epoch = int(time.mktime(time.strptime(time_string, pattern)))
+        except Exception as error:
+            # print("ALX:error:{}".format(error))
+            pass
+    return epoch
