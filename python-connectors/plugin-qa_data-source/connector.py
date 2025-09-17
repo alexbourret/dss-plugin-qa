@@ -12,7 +12,6 @@ class DataSourceConnector(Connector):
         self.use_emojis_in_columns_names = config.get("use_emojis_in_columns_names", True)
         self.use_date = config.get("use_date", False)
         self.use_datetime_utc = config.get("use_datetime_utc", False)
-        self.use_datetime_tz = config.get("use_datetime_tz", False)
         self.use_datetime_no_tz = config.get("use_datetime_no_tz", False)
         self.export_schema = config.get("export_schema", False)
 
@@ -41,7 +40,11 @@ class DataSourceConnector(Connector):
                 columns.append(
                     {
                         "name": build_column_name(column_number, use_cjk=self.use_cjk_in_columns_names, use_emoji=self.use_emojis_in_columns_names),
-                        "type": get_type(column_number, use_date=self.use_date, use_datetime_utc=self.use_datetime_utc, use_datetime_tz=self.use_datetime_tz, use_datetime_no_tz=self.use_datetime_no_tz)
+                        "type": get_type(
+                            column_number,
+                            use_date=self.use_date, use_datetime_utc=self.use_datetime_utc,
+                            use_datetime_no_tz=self.use_datetime_no_tz
+                        )
                     }
                 )
             return {
@@ -67,7 +70,6 @@ class DataSourceConnector(Connector):
                 use_emoji=self.use_emojis_in_columns_names,
                 use_date=self.use_date,
                 use_datetime_utc=self.use_datetime_utc,
-                use_datetime_tz=self.use_datetime_tz,
                 use_datetime_no_tz=self.use_datetime_no_tz
             )
             if limit.is_reached():

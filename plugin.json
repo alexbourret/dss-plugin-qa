@@ -1,6 +1,6 @@
 {
     "id": "plugin-qa",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "meta": {
         "label": "Plugin QA",
         "description": "Tools for DSS plugins QA",

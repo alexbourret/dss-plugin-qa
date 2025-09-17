@@ -76,12 +76,6 @@
             "defaultValue" : false
         },
         {
-            "name": "use_datetime_tz",
-            "label": "Add datetime with tz",
-            "type": "BOOLEAN",
-            "defaultValue" : false
-        },
-        {
             "name": "use_datetime_no_tz",
             "label": "Add no-timezone datetime",
             "type": "BOOLEAN",

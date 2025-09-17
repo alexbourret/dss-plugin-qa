@@ -43,14 +43,10 @@ previous_line = None
 previous_dataset_line = None
 previous_dataset_latest_date = None
 if previous_dataset_df is not None:
-    print("ALX:There is a reference dataset")
     previous_dataset_iterator = previous_dataset_df.iterrows()
     _, previous_dataset_line = next(previous_dataset_iterator)
-    print("ALX:previous_dataset_line={}".format(previous_dataset_line))
     date = previous_dataset_line["Date"]
-    print("ALX:date={}".format(date))
     previous_dataset_latest_date = previous_dataset_line["Date"]
-    print("ALX:The reference dataset earliest date is {}".format(previous_dataset_latest_date))
 
 reference_dataset_synched = False
 

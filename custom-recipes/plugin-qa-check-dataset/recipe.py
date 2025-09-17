@@ -21,16 +21,16 @@ number_of_columns = 0
 should_raise_on_error = config.get("should_raise_on_error", False)
 use_date = config.get("use_date", False)
 use_datetime_utc = config.get("use_datetime_utc", False)
-use_datetime_tz = config.get("use_datetime_tz", False)
 use_datetime_no_tz = config.get("use_datetime_no_tz", False)
 
 for row_number, input_parameters_row in input_parameters_dataframe.iterrows():
     column_number = 0
     for actual_value in input_parameters_row:
         predicted_value = chaos_monkey(
-            build_value(row_number, column_number,
-                        use_date=use_date, use_datetime_utc=use_datetime_utc,
-                        use_datetime_tz=use_datetime_tz, use_datetime_no_tz=use_datetime_no_tz
+            build_value(
+                row_number, column_number,
+                use_date=use_date, use_datetime_utc=use_datetime_utc,
+                use_datetime_no_tz=use_datetime_no_tz
             )
         )
         if type(predicted_value) != type(actual_value):
