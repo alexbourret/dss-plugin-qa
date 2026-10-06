@@ -14,6 +14,7 @@ class DataSourceConnector(Connector):
         self.use_datetime_utc = config.get("use_datetime_utc", False)
         self.use_datetime_no_tz = config.get("use_datetime_no_tz", False)
         self.export_schema = config.get("export_schema", False)
+        self.random_null_values = config.get("random_null_values", False)
 
     def get_read_schema(self):
         """
@@ -70,7 +71,8 @@ class DataSourceConnector(Connector):
                 use_emoji=self.use_emojis_in_columns_names,
                 use_date=self.use_date,
                 use_datetime_utc=self.use_datetime_utc,
-                use_datetime_no_tz=self.use_datetime_no_tz
+                use_datetime_no_tz=self.use_datetime_no_tz,
+                random_null_values=self.random_null_values
             )
             if limit.is_reached():
                 return

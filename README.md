@@ -15,6 +15,15 @@ The *File system testing* recipe runs common file operation tests on any managed
 
 ![](img/fs%20testing%20flow.png)
 
+## Chaos Monkey
+
+The *Chaos Monkey* recipe takes one input dataset and writes one output dataset with the same schema. Columns are processed in schema order.
+
+- **Use all dataset** copies every input row. The first row is unchanged; the second row has its first column set to null, the third row has its second column set to null, and so on through the last column. Any remaining rows are unchanged. Short datasets only null the columns reached by their available rows.
+- **Duplicate first line** uses only the first input row. It writes an unchanged copy, then one copy per column with only that column set to null, then another unchanged copy. For an input with N columns, the output contains N + 2 rows.
+
+An empty input produces an empty output in either mode. Existing null values are preserved.
+
 ### Change logs
 
 - v0.0.1 Initial version

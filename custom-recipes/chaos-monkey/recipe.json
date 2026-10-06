@@ -1,0 +1,41 @@
+{
+    "meta": {
+        "label": "Chaos Monkey",
+        "description": "Create dataset variants with one null cell per row, advancing through the columns.",
+        "icon": "icon-random"
+    },
+    "kind": "PYTHON",
+    "selectableFromDataset": "input_dataset",
+    "inputRoles": [
+        {
+            "name": "input_dataset",
+            "label": "Input dataset",
+            "arity": "UNARY",
+            "required": true,
+            "acceptsDataset": true
+        }
+    ],
+    "outputRoles": [
+        {
+            "name": "output_dataset",
+            "label": "Output dataset",
+            "arity": "UNARY",
+            "required": true,
+            "acceptsDataset": true
+        }
+    ],
+    "params": [
+        {
+            "name": "mode",
+            "label": "Mode",
+            "type": "SELECT",
+            "defaultValue": "use_all_dataset",
+            "selectChoices": [
+                {"value": "use_all_dataset", "label": "Use whole input dataset"},
+                {"value": "duplicate_first_line", "label": "Duplicate first line"}
+            ],
+            "description": "Use all dataset preserves every input row, nulling column 1 on row 2, column 2 on row 3, and so on. Duplicate first line produces an unchanged first row, one copy per column with that cell nulled, and an unchanged final row."
+        }
+    ],
+    "resourceKeys": []
+}

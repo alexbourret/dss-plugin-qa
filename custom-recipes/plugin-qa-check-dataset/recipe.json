@@ -82,6 +82,12 @@
             "defaultValue" : false
         },
         {
+            "name": "random_null_values",
+            "label": "Generate random null",
+            "type": "BOOLEAN",
+            "defaultValue" : false
+        },
+        {
             "name": "should_raise_on_error",
             "label": "Should raise on error",
             "type": "BOOLEAN",
