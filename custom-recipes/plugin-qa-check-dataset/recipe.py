@@ -25,17 +25,26 @@ should_raise_on_error = config.get("should_raise_on_error", False)
 use_date = config.get("use_date", False)
 use_datetime_utc = config.get("use_datetime_utc", False)
 use_datetime_no_tz = config.get("use_datetime_no_tz", False)
+random_null_values = config.get("random_null_values", False)
 
 for row_number, input_parameters_row in input_parameters_dataframe.iterrows():
     column_number = 0
     for actual_value in input_parameters_row:
-        predicted_value = chaos_monkey(
-            build_value(
+        if random_null_values:
+            predicted_value = chaos_monkey(
+                build_value(
+                    row_number, column_number,
+                    use_date=use_date, use_datetime_utc=use_datetime_utc,
+                    use_datetime_no_tz=use_datetime_no_tz
+                ),
+                row_number, column_number, len(input_column_types)
+            )
+        else:
+            predicted_value = build_value(
                 row_number, column_number,
                 use_date=use_date, use_datetime_utc=use_datetime_utc,
                 use_datetime_no_tz=use_datetime_no_tz
             )
-        )
         input_column_type = input_column_types[column_number]
         if input_column_type in ["date", "datetimenotz", "dateonly"]:
             # column_number = column_number + 1

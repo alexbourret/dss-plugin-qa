@@ -59,7 +59,7 @@ for row_number, input_parameters_row in data_df.iterrows():
         for reference_value, reference_column_name in zip(previous_dataset_line, previous_dataset_df.columns):
             if type(input_parameters_row[reference_column_name])==float and math.isnan(input_parameters_row[reference_column_name]) and type(reference_value)==float and math.isnan(reference_value):
                 pass
-            elif input_parameters_row[reference_column_name] != reference_value:
+            elif input_parameters_row[reference_column_name] != reference_value: # and row_number not in [129, 134, 135]:
                 raise Exception("Mismatch between reference and new dataset on row {} ({}). On column {}, {}!={}".format(
                     row_number,
                     input_parameters_row["Date"],

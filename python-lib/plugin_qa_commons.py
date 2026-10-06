@@ -14,16 +14,25 @@ class RecordsLimit():
         return self.counter > self.records_limit
 
 
-def build_row(row_number, number_of_columns, use_cjk=False, use_emoji=False, use_date=False, use_datetime_utc=False, use_datetime_no_tz=False):
+def build_row(row_number, number_of_columns, use_cjk=False, use_emoji=False, use_date=False, use_datetime_utc=False, use_datetime_no_tz=False, random_null_values=False):
     row = {}
     for column_number in range(0, number_of_columns):
-        row.update(
-            {
-                build_column_name(column_number, use_cjk=use_cjk, use_emoji=use_emoji): chaos_monkey(
-                    build_value(row_number, column_number, use_date=use_date, use_datetime_utc=use_datetime_utc, use_datetime_no_tz=use_datetime_no_tz)
-                )
-            }
-        )
+        if random_null_values:
+            row.update(
+                {
+                    build_column_name(column_number, use_cjk=use_cjk, use_emoji=use_emoji): chaos_monkey(
+                        build_value(row_number, column_number, use_date=use_date, use_datetime_utc=use_datetime_utc, use_datetime_no_tz=use_datetime_no_tz),
+                        row_number, column_number, number_of_columns
+                    )
+                }
+            )
+        else:
+            row.update(
+                {
+                    build_column_name(column_number, use_cjk=use_cjk, use_emoji=use_emoji):
+                        build_value(row_number, column_number, use_date=use_date, use_datetime_utc=use_datetime_utc, use_datetime_no_tz=use_datetime_no_tz)
+                }
+            )
     return row
 
 
@@ -69,7 +78,9 @@ def get_type(column_number, use_date=False, use_datetime_utc=False, use_datetime
     return available_types[column_type_number]
 
 
-def chaos_monkey(cell_content):
+def chaos_monkey(cell_content, row_number, column_number, number_of_columns):
+    if row_number == column_number % number_of_columns:
+        return None
     return cell_content
 
 
