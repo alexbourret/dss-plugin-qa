@@ -29,6 +29,7 @@ An empty input produces an empty output in either mode. Existing null values are
 - v0.0.1 Initial version
 - v0.0.2 adding date, datetime with tz, datetime no tz, schema export
 - v0.0.3 adding filesystem testing
+- v0.0.5 adding random cell null generator
 
 ### Licence
 
